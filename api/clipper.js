@@ -3,25 +3,36 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method not allowed" });
   }
 
-  try {
-    const { url } = req.body;
+  let body = {};
 
-    if (!url) {
-      return res.status(400).json({ error: "URL wajib diisi" });
+  try {
+    // Ambil raw body manual (fix paling aman di Vercel)
+    const buffers = [];
+
+    for await (const chunk of req) {
+      buffers.push(chunk);
     }
 
-    return res.status(200).json({
-      status: "success",
-      message: "API sudah jalan",
-      clips: [
-        { start: 10, end: 25, text: "Jangan takut gagal" },
-        { start: 30, end: 45, text: "Kadang kita lelah" }
-      ]
-    });
+    const data = Buffer.concat(buffers).toString();
+    body = JSON.parse(data || "{}");
 
   } catch (error) {
-    return res.status(500).json({
-      error: error.message
-    });
+    return res.status(400).json({ error: "Body tidak valid" });
   }
+
+  const { url } = body;
+
+  if (!url) {
+    return res.status(400).json({ error: "URL wajib diisi" });
+  }
+
+  return res.status(200).json({
+    status: "success",
+    message: "API sudah jalan",
+    url_received: url,
+    clips: [
+      { start: 0, end: 15, text: "Clip 1" },
+      { start: 15, end: 30, text: "Clip 2" }
+    ]
+  });
 }
