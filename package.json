@@ -1,13 +1,11 @@
 {
   "name": "yt-auto-clipper",
   "version": "1.0.0",
-  "type": "module"
   "type": "module",
   "dependencies": {
     "youtube-transcript": "^1.0.6"
+  },
+  "engines": {
+    "node": "20.x"
   }
-"engines": {
-  "node": "20.x"
 }
-}
-  
