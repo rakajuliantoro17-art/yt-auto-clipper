@@ -1,1 +1,5 @@
-
+{
+  "name": "yt-auto-clipper",
+  "version": "1.0.0",
+  "type": "module"
+}
