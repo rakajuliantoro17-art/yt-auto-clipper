@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/clipper.js": {
+      "maxDuration": 10
+    }
+  }
+}
